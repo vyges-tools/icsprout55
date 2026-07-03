@@ -1,0 +1,11 @@
+schema_version: "vyges-upstream-v1"
+upstream:
+  type: "standalone"
+  repo: https://github.com/openecos-projects/icsprout55-pdk
+  branch: main
+license:
+  spdx: Apache-2.0
+  file: LICENSE
+# Auto-synced daily by .github/workflows/upstream-sync.yml (merge-based). Vyges additions
+# are preserved: icsprout55.vyges-pdk.json (PDK descriptor) + vyges-additions/ (self-hosted collateral).
+metadata_locked: true
