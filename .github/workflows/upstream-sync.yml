@@ -1,0 +1,35 @@
+name: Upstream Sync
+# Auto-mirror openecos-projects/icsprout55-pdk into this Vyges mirror, preserving
+# Vyges additions (the icsprout55.vyges-pdk.json descriptor + any vyges-*/ dirs).
+on:
+  schedule:
+    - cron: '17 6 * * *'   # daily 06:17 UTC
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: upstream-sync
+  cancel-in-progress: false
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Merge upstream (keep Vyges additions)
+        run: |
+          set -euo pipefail
+          git config user.name  "vyges-bot"
+          git config user.email "bot@vyges.com"
+          git remote add upstream https://github.com/openecos-projects/icsprout55-pdk.git
+          git fetch --no-tags upstream main
+          before=$(git rev-parse HEAD)
+          # -X ours: on any conflict keep the Vyges side. vyges-*/ + the descriptor are
+          # mirror-only (absent upstream), so they are never touched by the merge.
+          git merge --no-edit -X ours upstream/main || { git merge --abort || true; echo "conflict; kept ours"; exit 0; }
+          if [ "$(git rev-parse HEAD)" != "$before" ]; then
+            git push origin HEAD:main && echo "synced upstream changes"
+          else
+            echo "already up to date"
+          fi
