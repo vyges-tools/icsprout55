@@ -1,6 +1,0 @@
-# Large PDK collateral materialized via `make unzip` lives under vyges-additions/ and is
-# tracked with Git LFS so the mirror self-hosts the timing/layout data (no upstream-release
-# dependency). See vyges-additions/README.md.
-vyges-additions/**/*.lib     filter=lfs diff=lfs merge=lfs -text
-vyges-additions/**/*.gds     filter=lfs diff=lfs merge=lfs -text
-vyges-additions/**/*.tar.bz2 filter=lfs diff=lfs merge=lfs -text
