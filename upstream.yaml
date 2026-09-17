@@ -1,11 +1,23 @@
 schema_version: "vyges-upstream-v1"
 upstream:
-  type: "standalone"
+  # pdk_mirror: a whole-repo PDK mirror. The upstream tree is copied verbatim, so there is
+  # no `import:` section -- the schema FORBIDS one for this type, because a selective import
+  # here would describe something the sync workflow never does.
+  type: "pdk_mirror"
   repo: https://github.com/openecos-projects/icsprout55-pdk
+  # What the daily sync actually merges: upstream main, whose HEAD this commit records.
   branch: main
+  commit: 68d89edb47847671e18f9e65d66c0cd883995e05
 license:
   spdx: Apache-2.0
   file: LICENSE
+# ⚠️ UNRESOLVED, do not "tidy" this away: upstream `main` and the `v1.10.100` tag have
+# DIVERGED -- main is 52 ahead and 26 behind the tag (measured 2026-09-17). The sync follows
+# main (the commit above); icsprout55.vyges-pdk.json pins `upstream.ref: v1.10.100`, a tag the
+# mirror also carries. So a consumer that checks out the tag gets the release tree and one
+# that clones the default branch does not, and the two are not the same PDK. Deciding which
+# one the descriptor should serve is a reproducibility call, not a formatting fix.
+#
 # Auto-synced daily by .github/workflows/upstream-sync.yml (merge-based). Vyges additions
 # are preserved: icsprout55.vyges-pdk.json (PDK descriptor) + vyges-additions/ (self-hosted collateral).
 metadata_locked: true
