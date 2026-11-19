@@ -33,6 +33,10 @@ make unzip PROXY_USE=true
 make unzip PROXY_USE=true TOOL=wget
 ```
 
+The default `main` branch contains ICS55 v2 (9T). For ICS55 v1 (7T),
+clone the `ics55-v1` branch or check out a v1 release tag. See
+[ECC PDK description](ECC-PDK.md) for the v2 resource manifest.
+
 ## IP libraries
 
 IP for ICS55 includes [IO libraries](IP/IO/), [standard cell libraries](IP/STD_cell/), [PLL](https://github.com/openecos-projects/ics55_ecos_pll), [DDR3/DDR2 PHY](https://github.com/openecos-projects/55nm-ddr3-ddr2-phy), SRAM, and ROM. Use the **[SRAM Compiler](https://factory.openecos.com/ip/sram)** and **[ROM Compiler](https://factory.openecos.com/ip/rom)** to generate memory macros for your design. See the [ECOS IP Library](https://factory.openecos.com/ip) for documentation and project status.
